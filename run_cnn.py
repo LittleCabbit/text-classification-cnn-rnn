@@ -153,7 +153,7 @@ def test():
     msg = 'Test Loss: {0:>6.2}, Test Acc: {1:>7.2%}'
     print(msg.format(loss_test, acc_test))
 
-    batch_size = 128
+    batch_size = 64
     data_len = len(x_test)
     num_batch = int((data_len - 1) / batch_size) + 1
 
@@ -187,8 +187,10 @@ if __name__ == '__main__':
 
     print('Configuring CNN model...')
     config = TCNNConfig()
-    if not os.path.exists(vocab_dir):  # 如果不存在词汇表，重建
+    print("-------------",os.path.exists(vocab_dir))
+    if os.path.exists(vocab_dir):  # 如果不存在词汇表，重建
         build_vocab(train_dir, vocab_dir, config.vocab_size)
+
     categories, cat_to_id = read_category()
     words, word_to_id = read_vocab(vocab_dir)
     config.vocab_size = len(words)

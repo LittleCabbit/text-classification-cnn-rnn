@@ -45,8 +45,10 @@ def read_file(filename):
     contents, labels = [], []
     with open_file(filename) as f:
         for line in f:
+            
             try:
-                label, content = line.strip().split('\t')
+                label, content = line.strip().split('$')
+
                 if content:
                     contents.append(list(native_content(content)))
                     labels.append(native_content(label))
@@ -62,7 +64,6 @@ def build_vocab(train_dir, vocab_dir, vocab_size=5000):
     all_data = []
     for content in data_train:
         all_data.extend(content)
-
     counter = Counter(all_data)
     count_pairs = counter.most_common(vocab_size - 1)
     words, _ = list(zip(*count_pairs))
@@ -83,7 +84,7 @@ def read_vocab(vocab_dir):
 
 def read_category():
     """读取分类目录，固定"""
-    categories = ['体育', '财经', '房产', '家居', '教育', '科技', '时尚', '时政', '游戏', '娱乐']
+    categories = ['零售日报业务', '普通采购业务', '普通采购业务（有代垫运费）', '普通采购业务（有定金）', '开票直接发货业务', '开票直接发货业务（有折扣）', '采购票到货未到业务', '采购货到票未到业务', '采购退货业务', '分批发货业务', '采购到货拒收业务', '固定资产业务',  '受托代销业务', '委托代销业务', '直运业务', '分期收款业务', '普通销售业务', '销售退货业务', '普通销售业务（有预收款和代垫运费）', '销售退货业务1', '普通销售业务（有预收款和代垫运费）1']
 
     categories = [native_content(x) for x in categories]
 
